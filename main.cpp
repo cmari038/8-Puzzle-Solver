@@ -52,8 +52,6 @@ int main() {
         }
 
         State* state = new State(board);
-       // state->print();
-
     }
     
 

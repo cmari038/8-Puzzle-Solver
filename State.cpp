@@ -131,6 +131,42 @@
         cout << endl;
 }
 
+State* State::left() {
+    int holder = initial[blankX - 1][blankY];
+    initial[blankX-1][blankY] = 0;
+    initial[blankX][blankY] = holder;
+    blankX = blankX - 1;
+    return this;
+}
+
+State* State::right() {
+    int holder = initial[blankX + 1][blankY];
+    initial[blankX + 1][blankY] = 0;
+    initial[blankX][blankY] = holder;
+    blankX = blankX + 1;
+    return this;
+}
+
+State* State::up() {
+    int holder = initial[blankX][blankY+1];
+    initial[blankX][blankY + 1] = 0;
+    initial[blankX][blankY] = holder;
+    blankY = blankY + 1;
+    return this;
+}
+
+State* State::down() {
+    int holder = initial[blankX][blankY - 1];
+    initial[blankX][blankY - 1] = 0;
+    initial[blankX][blankY] = holder;
+    blankY = blankY - 1;
+    return this;
+}
+
+
+
+
+
 
 
 
