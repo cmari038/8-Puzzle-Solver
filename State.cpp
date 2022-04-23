@@ -164,16 +164,18 @@ State* State::down() {
 }
 
 void State::SetCost(int val) {
+    ++cost;
+
     if(val == 1) {
-        Heuristic = 1;
+        Heuristic = cost;
     }
 
     else if(val == 2) {
-        Heuristic = MisplacedTile() + 1;
+        Heuristic = MisplacedTile() + cost;
     }
 
     else {
-        Heuristic = Euclidean() + 1;
+        Heuristic = Euclidean() + cost;
     }
 }
 

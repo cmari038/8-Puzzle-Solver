@@ -11,7 +11,9 @@ class State {
     private:
     int goal[3][3];
     int initial[3][3];
+
     int Heuristic;
+    int cost = 0;
     int blankX;
     int blankY;
 
