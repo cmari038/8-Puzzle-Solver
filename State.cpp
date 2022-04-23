@@ -163,6 +163,20 @@ State* State::down() {
     return this;
 }
 
+void State::SetCost(int val) {
+    if(val == 1) {
+        Heuristic = 1;
+    }
+
+    else if(val == 2) {
+        Heuristic = MisplacedTile() + 1;
+    }
+
+    else {
+        Heuristic = Euclidean() + 1;
+    }
+}
+
 
 
 

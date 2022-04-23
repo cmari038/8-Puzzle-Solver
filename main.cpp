@@ -12,6 +12,7 @@ int main() {
     vector<State*> frontier;
     vector<State*> explored;
     vector<int> cost;
+    int choice;
     
 
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
@@ -60,6 +61,18 @@ int main() {
         cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
 
         cin >> algorithm;
+
+        if(algorithm == "Uniform Cost Search") {
+            choice = 1;
+        }
+
+        else if(algorithm == "A* with the Misplaced Tile heuristic") {
+            choice = 2;
+        }
+
+        else {
+            choice = 3;
+        }
     
 
     return 0;

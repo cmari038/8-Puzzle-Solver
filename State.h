@@ -15,10 +15,11 @@ class State {
     int blankX;
     int blankY;
 
+    int SearchChoice; 
+
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
-
-
+    void SetCost(int val);
 
     public:
 
@@ -27,11 +28,16 @@ class State {
     State(int start[3][3]);
     int MisplacedTile();
     int Euclidean();
-    int SetCost();
+
+    //getter
+    int getTotalCost(int val) {
+        SetCost(val);
+        return Heuristic;
+    }
     
     // operators
     bool comparison();
-    
+    void operators();
     State* left();
     State* right();
     State* up();
