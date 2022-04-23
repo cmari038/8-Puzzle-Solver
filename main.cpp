@@ -26,30 +26,37 @@ int main() {
     else if(input == 2) {
         cout << "Enter your puzzle, use a zero to represent the blank" << endl << "Enter the first row, use space or tabs between numbers" << endl; 
 
-        for(unsigned i = 0; i < 2; ++i) {
+        for(unsigned i = 0; i < 3; ++i) {
             cin >> input;
             board[0][i] = input;
         }
 
+        cin.clear();
+
         cout << "Enter the second row, use space or tabs between numbers" << endl;
 
-        for(unsigned i = 0; i < 2; ++i) {
+        for(unsigned i = 0; i < 3; ++i) {
             cin >> input;
             board[1][i] = input;
         }
 
+        cin.clear();
+
         cout << "Enter the third row, use space or tabs between numbers" << endl;
 
-        for(unsigned i = 0; i < 2; ++i) {
+        for(unsigned i = 0; i < 3; ++i) {
             cin >> input;
             board[2][i] = input;
         }
 
-       // print(board, 3, 3);
+        cin.clear();
 
-      //  cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
+       cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
 
       //  cin >> algorithm;
+
+      //State* state = new State(board);
+      //state->print();
     
 
     }

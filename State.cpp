@@ -35,7 +35,7 @@
         }
     }
 
-    State::State() {
+    State::State(int start[3][3]) {
         int count = 0;
          for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
@@ -43,6 +43,8 @@
                 goal[i][j] = count;
             }
         }
+
+        setInitial(start);
     }
 
     void State::setInitial(int start[3][3]) {
@@ -61,8 +63,8 @@
 
     int State::MisplacedTile() {
         int count = 0;
-        for(unsigned i = 0; i < 2; ++i) {
-            for(unsigned j = 0; j < 2; ++j) {
+        for(unsigned i = 0; i < 3; ++i) {
+            for(unsigned j = 0; j < 3; ++j) {
                 if(initial[i][j] != goal[i][j]) {
                     ++count;
                 }
@@ -74,8 +76,8 @@
 
     int State::Euclidean() {
         int count = 0;
-        for(unsigned i = 0; i < 2; ++i) {
-            for(unsigned j = 0; j < 2; ++j) {
+        for(unsigned i = 0; i < 3; ++i) {
+            for(unsigned j = 0; j < 3; ++j) {
                  if(initial[i][j] != goal[i][j]) {
                     count += getDistance(initial[i][j],i,j);
                 }
@@ -88,8 +90,8 @@
 
     bool State::comparison() {
 
-        for(unsigned i = 0; i < 2; ++i) {
-            for(unsigned j = 0; j < 2; ++j) {
+        for(unsigned i = 0; i < 3; ++i) {
+            for(unsigned j = 0; j < 3; ++j) {
                 if(initial[i][j] != goal[i][j]) {
                     return false;
                 }

@@ -1,5 +1,5 @@
-//#IFNDEF "STATE_H"
-//#DEFINE "STATE_H"
+#ifndef STATE_H
+#define STATE_H
 
 #include <iostream>
 using namespace std;
@@ -22,7 +22,7 @@ class State {
     public:
 
     // setters
-    State();
+    State(int start[3][3]);
     void setInitial(int start[3][3]);
     int MisplacedTile();
     int Euclidean();
@@ -42,4 +42,4 @@ class State {
 
 };
 
-//#endif
+#endif
