@@ -16,14 +16,15 @@ class State {
     int blankY;
 
     int getDistance(int val, int x, int y);
+    void setInitial(int start[3][3]);
 
 
 
     public:
 
     // setters
+    State();
     State(int start[3][3]);
-    void setInitial(int start[3][3]);
     int MisplacedTile();
     int Euclidean();
     int SetCost();

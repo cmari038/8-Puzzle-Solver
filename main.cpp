@@ -21,6 +21,8 @@ int main() {
 
     if(input == 1) {
 
+        State* root =  new State();
+        
     }
 
     else if(input == 2) {
@@ -49,17 +51,18 @@ int main() {
             board[2][i] = input;
         }
 
-        cin.clear();
-
-       cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
-
-      //  cin >> algorithm;
-
-      //State* state = new State(board);
-      //state->print();
-    
+        State* state = new State(board);
+       // state->print();
 
     }
+    
+
+        cin.clear();
+
+        cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
+
+        cin >> algorithm;
+    
 
     return 0;
 }

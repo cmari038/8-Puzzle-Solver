@@ -35,8 +35,9 @@
         }
     }
 
-    State::State(int start[3][3]) {
-        int count = 0;
+    State::State() {
+
+         int count = 0;
          for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
                 ++count;
@@ -44,7 +45,25 @@
             }
         }
 
-        setInitial(start);
+         goal[2][2] = 0;
+
+        for(unsigned int i = 0; i < 3; ++i) {
+            for(unsigned int j = 0; j < 3; ++j) {
+                initial[i][j] = goal[i][j];
+            }
+        }
+
+        initial[0][2] = 5;
+        initial[1][0] = 3;
+        initial[1][1] = 4;
+
+    }
+
+    State::State(int start[3][3]) {
+       
+       State();
+       setInitial(start);
+
     }
 
     void State::setInitial(int start[3][3]) {
