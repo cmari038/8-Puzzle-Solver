@@ -23,20 +23,25 @@ class State {
     
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
-    void SetCost(int val);
+    void SetCost();
+    int MisplacedTile();
+    int Euclidean();
     
 
     public:
 
-    // setters
+    // setters and constructors
     State();
-    State(int start[3][3]);
-    int MisplacedTile();
-    int Euclidean();
+    State(int start[3][3]); // start
+    State(State* s); // expansion
+
+    void setSearchChoice(int val) {
+        SearchChoice = val;
+    }
 
     //getter
-    int getTotalCost(int val) {
-        SetCost(val);
+    int getTotalCost() {
+        SetCost();
         return Heuristic;
     }
 
@@ -48,13 +53,13 @@ class State {
         return blankY;
     }
 
-    bool CompareArrayVal(int x, int y) {
-        return goal[x][y] == initial[x][y];
-    }
+    //comparisons
+    friend bool Compare_State(State* s1, State* s2);
+    friend void Copy(State* s1, State* s2);
     
     // operators
     bool comparison();
-    void operators();
+    State* operators(string move);
     State* left();
     State* right();
     State* up();

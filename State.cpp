@@ -67,6 +67,11 @@
 
     }
 
+    State::State(State* s) {
+        State();
+        Copy(this, s);
+    }
+
     void State::setInitial(int start[3][3]) {
         for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
@@ -135,6 +140,7 @@ State* State::left() {
     initial[blankX-1][blankY] = 0;
     initial[blankX][blankY] = holder;
     blankX = blankX - 1;
+    ++cost;
     return this;
 }
 
@@ -143,6 +149,7 @@ State* State::right() {
     initial[blankX + 1][blankY] = 0;
     initial[blankX][blankY] = holder;
     blankX = blankX + 1;
+    ++cost;
     return this;
 }
 
@@ -151,6 +158,7 @@ State* State::up() {
     initial[blankX][blankY + 1] = 0;
     initial[blankX][blankY] = holder;
     blankY = blankY + 1;
+    ++cost;
     return this;
 }
 
@@ -159,24 +167,79 @@ State* State::down() {
     initial[blankX][blankY - 1] = 0;
     initial[blankX][blankY] = holder;
     blankY = blankY - 1;
+    ++cost;
     return this;
 }
 
-void State::SetCost(int val) {
-    ++cost;
+void State::SetCost() {
+    
 
-    if(val == 1) {
+    if(SearchChoice == 1) {
         Heuristic = cost;
     }
 
-    else if(val == 2) {
+    else if(SearchChoice == 2) {
         Heuristic = MisplacedTile() + cost;
     }
 
-    else {
+    else if(SearchChoice == 3){
         Heuristic = Euclidean() + cost;
     }
 }
+
+
+bool Compare_State(State* s1, State* s2) {
+         
+         for(unsigned i = 0; i < 3; ++i) {
+            for(unsigned j = 0; j < 3; ++j) {
+                if(s1->initial[i][j] != s2->initial[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+}
+
+State* State::operators(string move) {
+            if(blankX != 0 && move == "left") { // left operator
+              
+                return left();       
+            }
+
+            else if(blankX != 2 && move == "right") { // right operator
+               
+                return right();   
+            }
+
+            else if(blankY != 0 && move == "up") { // up operator
+               
+                return up();
+            }
+
+            else if(blankY != 2 && move == "down") { // down operator
+
+                return down();  
+            }
+ 
+            return nullptr;             
+}
+
+void Copy(State* s1, State* s2) {
+
+    s1->blankX = s2->blankX;
+    s1->blankY = s2->blankY;
+    s1 -> SearchChoice = s2->SearchChoice;
+
+    for(unsigned i = 0; i < 3; ++i) {
+        for(unsigned j = 0; j < 3; ++j) {
+            s1->initial[i][j] = s2 ->initial[i][j];
+        }
+    }
+}
+
+
+
+
 
 
 

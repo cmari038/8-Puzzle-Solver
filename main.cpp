@@ -2,6 +2,8 @@
 using namespace std;
 #include "State.h"
 #include <vector>
+#include <algorithm>
+#include <queue>
 
 
 int min(vector<int>& v) {
@@ -18,6 +20,10 @@ int min(vector<int>& v) {
     return index;
 }
 
+bool CostComparison(State* s1, State* s2) { // comparator used to sort. Learned from geeksforgeeks.org and cpluplus.com
+        return s1->getTotalCost() < s2->getTotalCost();
+}
+ 
 
 int main() {
 
@@ -26,10 +32,10 @@ int main() {
     int board[3][3];
     vector<State*> frontier;
     vector<State*> explored;
-    vector<int> cost;
     int choice;
     State* state = nullptr;
     bool goal = false;
+    bool fail = false;
     
 
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
@@ -93,74 +99,110 @@ int main() {
             choice = 3;
         }
 
-       //state->print();
+        state->setSearchChoice(choice);
 
         // search 
 
       State* holder = nullptr;
 
+      cout << "Putting start state into frontier" << endl;
+
        frontier.push_back(state);
 
-       while(!goal) {
+      // while(!goal || !fail) {
 
            if(frontier.size() == 0) {
                cout << "Failure" << endl;
-               goal = true;
+               fail = true;
            }
 
+           cout << "Putting state into explored" << endl;
            explored.push_back(state);
-           //delete frontier.at(min(cost));
+           
+           cout << "Remove state from frontier" << endl;
+           frontier.erase(frontier.begin()); //remove node from frontier
 
+           
            if(state->comparison()) {  // check if it's goal
                goal = true;
            }
 
            else { // expand
 
-                if(state->getBlankX() != 0) { // left operator
+           cout << "Expansion" << endl;
 
-                    if(!state->CompareArrayVal(state->getBlankX() - 1, state->getBlankY())) {
-                        holder = state->left();
-                        frontier.push_back(holder);
-                        cost.push_back(holder->getTotalCost(choice)); }
+                if(state->operators("left") != nullptr) {
 
+                    cout << "left" << endl;
+                    holder = state->operators("left");
+                   
+                    if(!Compare_State(holder, explored.back())) {
+                        frontier.push_back(state->operators("left")); 
+                        holder -> print();
+                    }
+
+                    else {
+                        delete[] holder;
+                    }
                 }
 
-                 if(state->getBlankX() != 2) { // right operator
-                    
-                    if(!state->CompareArrayVal(state->getBlankX() + 1, state->getBlankY())) {
-                        holder = state->right();
-                        frontier.push_back(holder);
-                        cost.push_back(holder->getTotalCost(choice)); }
+                if(state->operators("right") != nullptr) {
 
+                    cout << "right" << endl;
+
+                    holder = state->operators("right");
+                   
+                    if(!Compare_State(holder, explored.back())) {
+                        frontier.push_back(state->operators("right")); 
+                    }
+
+                    else {
+                        delete[] holder;
+                    }
                 }
 
-                 if(state->getBlankY() != 0) { // up operator
+                if(state->operators("up") != nullptr) {
 
-                    if(!state->CompareArrayVal(state->getBlankX(), state->getBlankY() + 1)) {
-                        holder = state->up();
-                        frontier.push_back(holder);
-                        cost.push_back(holder->getTotalCost(choice)); }
+                    cout << "up" << endl;
 
+                    holder = state->operators("up");
+                   
+                    if(!Compare_State(holder, explored.back())) {
+                        frontier.push_back(state->operators("up")); 
+                    }
+
+                    else {
+                        delete[] holder;
+                    }
                 }
 
-                 if(state->getBlankY() != 2) { // down operator
+                if(state->operators("down") != nullptr) {
 
-                    if(!state->CompareArrayVal(state->getBlankX(), state->getBlankY() - 1)) {
-                        holder = state->down();
-                        frontier.push_back(holder);
-                        cost.push_back(holder->getTotalCost(choice)); }
+                    cout << "down" << endl;
+                    holder = state->operators("down");
+                   
+                    if(!Compare_State(holder, explored.back())) {
+                        frontier.push_back(state->operators("down")); 
+                    }
 
+                    else {
+                        delete[] holder;
+                    }
                 }
 
-                state = frontier.at(min(cost));
-
+                sort(frontier.begin(), frontier.end(), CostComparison); 
+                state = frontier.at(0);
+                state -> print();
 
             }
 
 
+      // }
 
-        }
+    
+        if(goal == true) {
+                state->print();
+        } 
 
     
 
