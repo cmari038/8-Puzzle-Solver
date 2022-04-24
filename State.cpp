@@ -123,10 +123,8 @@
 
     void State::print() {
         for(unsigned i = 0; i < 3; ++i) {
-           // cout << "Check" << endl;
             for(unsigned j = 0; j < 3; ++j) {
                cout << initial[i][j] << " ";
-              // cout << "Check 2" << endl;
             }
             cout << endl;
         }
@@ -179,7 +177,6 @@ void State::SetCost(int val) {
         Heuristic = Euclidean() + cost;
     }
 }
-
 
 
 

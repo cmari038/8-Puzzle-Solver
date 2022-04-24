@@ -4,6 +4,21 @@ using namespace std;
 #include <vector>
 
 
+int min(vector<int>& v) {
+    int val = v.at(0);
+    int index;
+
+    for(unsigned i = 0; i < v.size(); ++i) {
+        if(v.at(i) < val) {
+            val = v.at(i);
+            index = i;
+        }
+    }
+
+    return index;
+}
+
+
 int main() {
 
     int input; 
@@ -14,6 +29,7 @@ int main() {
     vector<int> cost;
     int choice;
     State* state = nullptr;
+    bool goal = false;
     
 
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
@@ -77,7 +93,75 @@ int main() {
             choice = 3;
         }
 
-       state->print();
+       //state->print();
+
+        // search 
+
+      State* holder = nullptr;
+
+       frontier.push_back(state);
+
+       while(!goal) {
+
+           if(frontier.size() == 0) {
+               cout << "Failure" << endl;
+               goal = true;
+           }
+
+           explored.push_back(state);
+           //delete frontier.at(min(cost));
+
+           if(state->comparison()) {  // check if it's goal
+               goal = true;
+           }
+
+           else { // expand
+
+                if(state->getBlankX() != 0) { // left operator
+
+                    if(!state->CompareArrayVal(state->getBlankX() - 1, state->getBlankY())) {
+                        holder = state->left();
+                        frontier.push_back(holder);
+                        cost.push_back(holder->getTotalCost(choice)); }
+
+                }
+
+                 if(state->getBlankX() != 2) { // right operator
+                    
+                    if(!state->CompareArrayVal(state->getBlankX() + 1, state->getBlankY())) {
+                        holder = state->right();
+                        frontier.push_back(holder);
+                        cost.push_back(holder->getTotalCost(choice)); }
+
+                }
+
+                 if(state->getBlankY() != 0) { // up operator
+
+                    if(!state->CompareArrayVal(state->getBlankX(), state->getBlankY() + 1)) {
+                        holder = state->up();
+                        frontier.push_back(holder);
+                        cost.push_back(holder->getTotalCost(choice)); }
+
+                }
+
+                 if(state->getBlankY() != 2) { // down operator
+
+                    if(!state->CompareArrayVal(state->getBlankX(), state->getBlankY() - 1)) {
+                        holder = state->down();
+                        frontier.push_back(holder);
+                        cost.push_back(holder->getTotalCost(choice)); }
+
+                }
+
+                state = frontier.at(min(cost));
+
+
+            }
+
+
+
+        }
+
     
 
     return 0;

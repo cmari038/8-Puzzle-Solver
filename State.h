@@ -5,6 +5,7 @@
 using namespace std;
 #include <cmath>
 #include <vector>
+#include <stdlib.h>
 
 class State {
     
@@ -19,9 +20,11 @@ class State {
 
     int SearchChoice; 
 
+    
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
     void SetCost(int val);
+    
 
     public:
 
@@ -35,6 +38,18 @@ class State {
     int getTotalCost(int val) {
         SetCost(val);
         return Heuristic;
+    }
+
+    int getBlankX() {
+        return blankX;
+    }
+
+    int getBlankY() {
+        return blankY;
+    }
+
+    bool CompareArrayVal(int x, int y) {
+        return goal[x][y] == initial[x][y];
     }
     
     // operators
