@@ -20,7 +20,7 @@ int min(vector<int>& v) {
     return index;
 }
 
-bool CostComparison(State* s1, State* s2) { // comparator used to sort. Learned from geeksforgeeks.org and cpluplus.com
+bool CostComparison(State* s1, State* s2) { // comparator used to edit sort. Learned from geeksforgeeks.org and cpluplus.com
         return s1->getTotalCost() < s2->getTotalCost();
 }
  
@@ -106,21 +106,21 @@ int main() {
 
       State* holder = nullptr;
 
-      cout << "Putting start state into frontier" << endl;
+     // cout << "Putting start state into frontier" << endl;
 
        frontier.push_back(state);
 
-      // while(!goal || !fail) {
+     //  while(!goal || !fail) {
 
            if(frontier.size() == 0) {
                cout << "Failure" << endl;
                fail = true;
            }
 
-           cout << "Putting state into explored" << endl;
+          // cout << "Putting state into explored" << endl;
            explored.push_back(state);
            
-           cout << "Remove state from frontier" << endl;
+          // cout << "Remove state from frontier" << endl;
            frontier.erase(frontier.begin()); //remove node from frontier
 
            
@@ -130,7 +130,7 @@ int main() {
 
            else { // expand
 
-           cout << "Expansion" << endl;
+         //  cout << "Expansion" << endl;
 
                 if(state->getBlankY() != 0) {
 
@@ -159,6 +159,7 @@ int main() {
                     if(!Compare_State(holder, explored.back())) {
                         frontier.push_back(holder); 
                         holder -> print();
+                        cout << endl;
                     }
 
                     else {
@@ -176,6 +177,7 @@ int main() {
                     if(!Compare_State(holder, explored.back())) {
                         frontier.push_back(holder); 
                         holder -> print();
+                        cout << endl;
                     }
 
                     else {
@@ -192,6 +194,7 @@ int main() {
                     if(!Compare_State(holder, explored.back())) {
                         frontier.push_back(holder); 
                         holder -> print();
+                        cout << endl;
                     }
 
                     else {
@@ -201,12 +204,17 @@ int main() {
 
                 sort(frontier.begin(), frontier.end(), CostComparison); 
                 state = frontier.at(0);
+                for(unsigned i = 0; i < frontier.size(); ++i) {
+                    cout << "Cost" << frontier.at(i)->getTotalCost() << endl;
+                    frontier.at(i) -> print();
+                    cout << endl;
+                }
              // state -> print();
 
             }
 
 
-      // } 
+       //} 
 
     
         if(goal == true) {

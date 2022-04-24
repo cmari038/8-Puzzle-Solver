@@ -152,18 +152,18 @@ void State::right() {
 }
 
 void State::up() {
-    int holder = initial[blankX+1][blankY];
-    initial[blankX+1][blankY] = 0;
-    initial[blankX][blankY] = holder;
-    blankX = blankX + 1;
-    ++cost;
-}
-
-void State::down() {
     int holder = initial[blankX-1][blankY];
     initial[blankX-1][blankY] = 0;
     initial[blankX][blankY] = holder;
     blankX = blankX - 1;
+    ++cost;
+}
+
+void State::down() {
+    int holder = initial[blankX+1][blankY];
+    initial[blankX+1][blankY] = 0;
+    initial[blankX][blankY] = holder;
+    blankX = blankX + 1;
     ++cost;
 }
 
@@ -196,35 +196,12 @@ bool Compare_State(State* s1, State* s2) {
         return true;
 }
 
-/*State* State::operators(string move) {
-            if(blankX != 0 && move == "left") { // left operator
-              
-                return left();       
-            }
-
-            else if(blankX != 2 && move == "right") { // right operator
-               
-                return right();   
-            }
-
-            else if(blankY != 0 && move == "up") { // up operator
-               
-                return up();
-            }
-
-            else if(blankY != 2 && move == "down") { // down operator
-
-                return down();  
-            }
- 
-            return nullptr;             
-} */
-
 void Copy(State* s1, State* s2) {
 
     s1->blankX = s2->blankX;
     s1->blankY = s2->blankY;
-    s1 -> SearchChoice = s2->SearchChoice;
+    s1->SearchChoice = s2->SearchChoice;
+    s1->cost = s2->cost;
 
     for(unsigned i = 0; i < 3; ++i) {
         for(unsigned j = 0; j < 3; ++j) {
