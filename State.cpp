@@ -1,5 +1,6 @@
 #include "State.h"
 
+// g++ main.cpp State.cpp
  int State::getDistance(int val, int x, int y) {
 
         if(val == 1) {
@@ -36,7 +37,6 @@
     }
 
     State::State() {
-
          int count = 0;
          for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
@@ -51,6 +51,7 @@
             for(unsigned int j = 0; j < 3; ++j) {
                 initial[i][j] = goal[i][j];
             }
+
         }
 
         initial[0][2] = 5;
@@ -122,13 +123,13 @@
 
     void State::print() {
         for(unsigned i = 0; i < 3; ++i) {
-            for(unsigned int j = 0; j < 3; ++i) {
-                cout << initial[i][j] << " ";
+           // cout << "Check" << endl;
+            for(unsigned j = 0; j < 3; ++j) {
+               cout << initial[i][j] << " ";
+              // cout << "Check 2" << endl;
             }
             cout << endl;
         }
-
-        cout << endl;
 }
 
 State* State::left() {

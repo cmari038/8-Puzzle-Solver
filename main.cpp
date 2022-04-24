@@ -13,6 +13,7 @@ int main() {
     vector<State*> explored;
     vector<int> cost;
     int choice;
+    State* state = nullptr;
     
 
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
@@ -22,12 +23,14 @@ int main() {
 
     if(input == 1) {
 
-        State* root =  new State();
+        state = new State();
         
     }
 
     else if(input == 2) {
         cout << "Enter your puzzle, use a zero to represent the blank" << endl << "Enter the first row, use space or tabs between numbers" << endl; 
+
+        cin.clear();
 
         for(unsigned i = 0; i < 3; ++i) {
             cin >> input;
@@ -52,7 +55,7 @@ int main() {
             board[2][i] = input;
         }
 
-        State* state = new State(board);
+        state = new State(board);
     }
     
 
@@ -73,6 +76,8 @@ int main() {
         else {
             choice = 3;
         }
+
+       state->print();
     
 
     return 0;
