@@ -135,40 +135,36 @@
         }
 }
 
-State* State::left() {
-    int holder = initial[blankX - 1][blankY];
+void State::left() {
+    int holder = initial[blankX][blankY-1];
+    initial[blankX][blankY-1] = 0;
+    initial[blankX][blankY] = holder;
+    blankY = blankY - 1;
+    ++cost;
+}
+
+void State::right() {
+    int holder = initial[blankX][blankY+1];
+    initial[blankX][blankY+1] = 0;
+    initial[blankX][blankY] = holder;
+    blankY = blankY + 1;
+    ++cost;
+}
+
+void State::up() {
+    int holder = initial[blankX+1][blankY];
+    initial[blankX+1][blankY] = 0;
+    initial[blankX][blankY] = holder;
+    blankX = blankX + 1;
+    ++cost;
+}
+
+void State::down() {
+    int holder = initial[blankX-1][blankY];
     initial[blankX-1][blankY] = 0;
     initial[blankX][blankY] = holder;
     blankX = blankX - 1;
     ++cost;
-    return this;
-}
-
-State* State::right() {
-    int holder = initial[blankX + 1][blankY];
-    initial[blankX + 1][blankY] = 0;
-    initial[blankX][blankY] = holder;
-    blankX = blankX + 1;
-    ++cost;
-    return this;
-}
-
-State* State::up() {
-    int holder = initial[blankX][blankY+1];
-    initial[blankX][blankY + 1] = 0;
-    initial[blankX][blankY] = holder;
-    blankY = blankY + 1;
-    ++cost;
-    return this;
-}
-
-State* State::down() {
-    int holder = initial[blankX][blankY - 1];
-    initial[blankX][blankY - 1] = 0;
-    initial[blankX][blankY] = holder;
-    blankY = blankY - 1;
-    ++cost;
-    return this;
 }
 
 void State::SetCost() {
@@ -200,7 +196,7 @@ bool Compare_State(State* s1, State* s2) {
         return true;
 }
 
-State* State::operators(string move) {
+/*State* State::operators(string move) {
             if(blankX != 0 && move == "left") { // left operator
               
                 return left();       
@@ -222,7 +218,7 @@ State* State::operators(string move) {
             }
  
             return nullptr;             
-}
+} */
 
 void Copy(State* s1, State* s2) {
 

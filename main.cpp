@@ -78,6 +78,7 @@ int main() {
         }
 
         state = new State(board);
+        cout << endl;
     }
     
 
@@ -131,73 +132,81 @@ int main() {
 
            cout << "Expansion" << endl;
 
-                if(state->operators("left") != nullptr) {
+                if(state->getBlankY() != 0) {
 
                     cout << "left" << endl;
-                    holder = state->operators("left");
+                    holder = new State(state);
+                    holder -> left();
                    
                     if(!Compare_State(holder, explored.back())) {
-                        frontier.push_back(state->operators("left")); 
+                        frontier.push_back(holder); 
+                        holder -> print();
+                        cout << endl;
+                    }
+
+                    else {
+                        delete holder;
+                    }
+                }
+
+                if(state->getBlankY() != 2) {
+
+                    cout << "right" << endl;
+
+                    holder = new State(state);
+                    holder -> right();
+                   
+                    if(!Compare_State(holder, explored.back())) {
+                        frontier.push_back(holder); 
                         holder -> print();
                     }
 
                     else {
-                        delete[] holder;
+                        delete holder;
                     }
                 }
 
-                if(state->operators("right") != nullptr) {
-
-                    cout << "right" << endl;
-
-                    holder = state->operators("right");
-                   
-                    if(!Compare_State(holder, explored.back())) {
-                        frontier.push_back(state->operators("right")); 
-                    }
-
-                    else {
-                        delete[] holder;
-                    }
-                }
-
-                if(state->operators("up") != nullptr) {
+                if(state->getBlankX() != 0) {
 
                     cout << "up" << endl;
 
-                    holder = state->operators("up");
+                    holder = new State(state);
+                    holder -> up();
                    
                     if(!Compare_State(holder, explored.back())) {
-                        frontier.push_back(state->operators("up")); 
+                        frontier.push_back(holder); 
+                        holder -> print();
                     }
 
                     else {
-                        delete[] holder;
+                        delete holder;
                     }
                 }
 
-                if(state->operators("down") != nullptr) {
+                if(state->getBlankX() != 2) {
 
-                    cout << "down" << endl;
-                    holder = state->operators("down");
+                   cout << "down" << endl;
+                   holder = new State(state);
+                   holder -> down();
                    
                     if(!Compare_State(holder, explored.back())) {
-                        frontier.push_back(state->operators("down")); 
+                        frontier.push_back(holder); 
+                        holder -> print();
                     }
 
                     else {
-                        delete[] holder;
+                        delete holder;
                     }
-                }
+                } 
 
                 sort(frontier.begin(), frontier.end(), CostComparison); 
                 state = frontier.at(0);
-                state -> print();
+             // state -> print();
 
             }
 
 
-      // }
+      // } 
 
     
         if(goal == true) {

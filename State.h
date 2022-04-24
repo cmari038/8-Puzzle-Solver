@@ -59,11 +59,11 @@ class State {
     
     // operators
     bool comparison();
-    State* operators(string move);
-    State* left();
-    State* right();
-    State* up();
-    State* down(); 
+  //  State* operators(string move);
+    void left();
+    void right();
+    void up();
+    void down(); 
 
     //print
 
