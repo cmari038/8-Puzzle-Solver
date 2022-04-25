@@ -6,20 +6,6 @@ using namespace std;
 #include <queue>
 
 
-int min(vector<int>& v) {
-    int val = v.at(0);
-    int index;
-
-    for(unsigned i = 0; i < v.size(); ++i) {
-        if(v.at(i) < val) {
-            val = v.at(i);
-            index = i;
-        }
-    }
-
-    return index;
-}
-
 bool CostComparison(State* s1, State* s2) { // comparator used to edit sort. Learned from geeksforgeeks.org and cpluplus.com
         return s1->getTotalCost() < s2->getTotalCost();
 }
@@ -28,14 +14,15 @@ bool CostComparison(State* s1, State* s2) { // comparator used to edit sort. Lea
 int main() {
 
     int input; 
-    string algorithm;
     int board[3][3];
     vector<State*> frontier;
     vector<State*> explored;
-    int choice;
+    int depth;
+    int maxNodes = 0;
+    int expndNodes = 1;
     State* state = nullptr;
-    bool goal = false;
-    bool fail = false;
+    bool Goal = false;
+    int fail = 0;
     
 
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
@@ -86,21 +73,9 @@ int main() {
 
         cout << "Enter your choice of algorithm" << endl << "Uniform Cost Search" << endl << "A* with the Misplaced Tile heuristic" << endl << "A* with the the Euclidean distance heuristic" << endl;
 
-        cin >> algorithm;
+        cin >>input;
 
-        if(algorithm == "Uniform Cost Search") {
-            choice = 1;
-        }
-
-        else if(algorithm == "A* with the Misplaced Tile heuristic") {
-            choice = 2;
-        }
-
-        else {
-            choice = 3;
-        }
-
-        state->setSearchChoice(choice);
+        state->setSearchChoice(input);
 
         // search 
 
@@ -110,38 +85,38 @@ int main() {
 
        frontier.push_back(state);
 
-     //  while(!goal || !fail) {
+       while(!Goal) {
 
            if(frontier.size() == 0) {
                cout << "Failure" << endl;
-               fail = true;
+               fail = 1;
+               Goal = true;
            }
 
-          // cout << "Putting state into explored" << endl;
+         //  cout << "Putting state into explored" << endl;
            explored.push_back(state);
            
-          // cout << "Remove state from frontier" << endl;
+         //  cout << "Remove state from frontier" << endl;
            frontier.erase(frontier.begin()); //remove node from frontier
-
            
+           cout << "check if it is goal:" << state->comparison() << endl;
            if(state->comparison()) {  // check if it's goal
-               goal = true;
+                cout << "true" << endl;
+                Goal = true;
            }
 
            else { // expand
 
-         //  cout << "Expansion" << endl;
+           cout << "Expansion" << endl;
 
                 if(state->getBlankY() != 0) {
 
-                    cout << "left" << endl;
+                //    cout << "left" << endl;
                     holder = new State(state);
                     holder -> left();
                    
-                    if(!Compare_State(holder, explored.back())) {
+                    if(!holder->explore(explored)) {
                         frontier.push_back(holder); 
-                        holder -> print();
-                        cout << endl;
                     }
 
                     else {
@@ -151,15 +126,13 @@ int main() {
 
                 if(state->getBlankY() != 2) {
 
-                    cout << "right" << endl;
+               //     cout << "right" << endl;
 
                     holder = new State(state);
                     holder -> right();
                    
-                    if(!Compare_State(holder, explored.back())) {
+                    if(!holder->explore(explored)) {
                         frontier.push_back(holder); 
-                        holder -> print();
-                        cout << endl;
                     }
 
                     else {
@@ -169,15 +142,13 @@ int main() {
 
                 if(state->getBlankX() != 0) {
 
-                    cout << "up" << endl;
+                 //   cout << "up" << endl;
 
                     holder = new State(state);
                     holder -> up();
                    
-                    if(!Compare_State(holder, explored.back())) {
+                    if(!holder->explore(explored)) {
                         frontier.push_back(holder); 
-                        holder -> print();
-                        cout << endl;
                     }
 
                     else {
@@ -187,14 +158,12 @@ int main() {
 
                 if(state->getBlankX() != 2) {
 
-                   cout << "down" << endl;
+               //    cout << "down" << endl;
                    holder = new State(state);
                    holder -> down();
                    
-                    if(!Compare_State(holder, explored.back())) {
+                    if(!holder->explore(explored)) {
                         frontier.push_back(holder); 
-                        holder -> print();
-                        cout << endl;
                     }
 
                     else {
@@ -202,23 +171,29 @@ int main() {
                     }
                 } 
 
+                if(frontier.size() > maxNodes) {
+                    maxNodes = frontier.size();
+                }
+                
                 sort(frontier.begin(), frontier.end(), CostComparison); 
                 state = frontier.at(0);
-                for(unsigned i = 0; i < frontier.size(); ++i) {
-                    cout << "Cost" << frontier.at(i)->getTotalCost() << endl;
-                    frontier.at(i) -> print();
-                    cout << endl;
-                }
-             // state -> print();
-
+                cout << "The best state to expand with g(n) " << state->C() << "and h(n) " << state->getHeuristic() << endl;
+                state -> print();
+                cout << "Expanding this node..." << endl;
+                ++expndNodes;
             }
 
 
-       //} 
+       } 
 
     
-        if(goal == true) {
+        if(Goal == true && fail == 0) {
                 state->print();
+                cout << "Goal!!!" << endl;
+                cout << endl;
+                cout << "To solve this problem, the search algorithm expanded a total of " << expndNodes << " nodes." << endl;
+                cout << "The maximum number of nodes in the queue at any one time: " << maxNodes << endl;
+                cout << "The depth of the goal node was " << endl;
         } 
 
     

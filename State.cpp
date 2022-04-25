@@ -34,6 +34,7 @@
          else if(val == 8) {
             return sqrt(pow(x-2, 2) + pow(y-1, 2));
         }
+        
     }
 
     State::State() {
@@ -54,21 +55,46 @@
 
         }
 
-        initial[0][2] = 5;
-        initial[1][0] = 3;
-        initial[1][1] = 4;
+        initial[2][2] = 5;
+        initial[1][2] = 0;
+        initial[1][1] = 8;
+        initial[2][1] = 6;
+
+        blankX = 1;
+        blankY = 2;
 
     }
 
     State::State(int start[3][3]) {
        
-       State();
+      // State();
+      int count = 0;
+         for(unsigned int i = 0; i < 3; ++i) {
+            for(unsigned int j = 0; j < 3; ++j) {
+                ++count;
+                goal[i][j] = count;
+            }
+        }
+         
+         goal[2][2] = 0;
+
        setInitial(start);
 
     }
 
     State::State(State* s) {
-        State();
+       // State();
+
+        int count = 0;
+        for(unsigned int i = 0; i < 3; ++i) {
+            for(unsigned int j = 0; j < 3; ++j) {
+                ++count;
+                goal[i][j] = count;
+            }
+        }
+
+         goal[2][2] = 0;
+
         Copy(this, s);
     }
 
@@ -91,7 +117,7 @@
         for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
                 if(initial[i][j] != goal[i][j]) {
-                    ++count;
+                    count += 1;
                 }
             }
         }
@@ -209,6 +235,25 @@ void Copy(State* s1, State* s2) {
         }
     }
 }
+
+bool State::explore(vector<State*>& v) {
+    for(int i = 0; i < v.size(); ++i) {
+        if(Compare_State(this, v.at(i))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/*void State::printGoal() {
+      for(unsigned i = 0; i < 3; ++i) {
+            for(unsigned j = 0; j < 3; ++j) {
+               cout << goal[i][j] << " ";
+            }
+            cout << endl;
+        }
+} */
 
 
 
