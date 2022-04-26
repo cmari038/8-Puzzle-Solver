@@ -99,7 +99,7 @@ int main() {
          //  cout << "Remove state from frontier" << endl;
            frontier.erase(frontier.begin()); //remove node from frontier
            
-           cout << "check if it is goal:" << state->comparison() << endl;
+        //   cout << "check if it is goal:" << state->comparison() << endl;
            if(state->comparison()) {  // check if it's goal
                 cout << "true" << endl;
                 Goal = true;
@@ -107,7 +107,7 @@ int main() {
 
            else { // expand
 
-           cout << "Expansion" << endl;
+          // cout << "Expansion" << endl;
 
                 if(state->getBlankY() != 0) {
 
@@ -177,7 +177,7 @@ int main() {
                 
                 sort(frontier.begin(), frontier.end(), CostComparison); 
                 state = frontier.at(0);
-                cout << "The best state to expand with g(n) " << state->C() << "and h(n) " << state->getHeuristic() << endl;
+                cout << "The best state to expand with g(n) " << state->C() << " and h(n) " << state->getHeuristic() << endl;
                 state -> print();
                 cout << "Expanding this node..." << endl;
                 ++expndNodes;

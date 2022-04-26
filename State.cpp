@@ -5,34 +5,46 @@
 
         if(val == 1) {
             return sqrt(pow(x, 2) + pow(y, 2)); 
+            // return abs(x) + abs(y);
         }
 
         else if(val == 2) {
             return sqrt(pow(x, 2) + pow(y-1, 2));
+            // return abs(x) + abs(y-1);
         }
 
         else if(val == 3) {
             return sqrt(pow(x, 2) + pow(y-2, 2));
+            // return abs(x) + abs(y-2);
         }
 
         else if(val == 4) {
             return sqrt(pow(x-1, 2) + pow(y, 2));
+            // return abs(x-1) + abs(y);
         }
 
         else if(val == 5) {
             return sqrt(pow(x-1, 2) + pow(y-1, 2));
+            // return abs(x-1) + abs(y-1);
         }
 
         else if(val == 6) {
             return sqrt(pow(x-1, 2) + pow(y-2, 2));
+            // return abs(x-1) + abs(y-2);
         }
 
         else if(val == 7) {
             return sqrt(pow(x-2, 2) + pow(y, 2));
+            // return abs(x-2) + abs(y);
         }
 
          else if(val == 8) {
             return sqrt(pow(x-2, 2) + pow(y-1, 2));
+           // return abs(x-2) + abs(y-1);
+        }
+
+        else {
+            return 0;
         }
         
     }
