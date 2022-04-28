@@ -23,8 +23,6 @@ class State {
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
     void SetCost();
-   // int MisplacedTile();
-   // int Euclidean();
     
 
     public:
@@ -89,8 +87,6 @@ class State {
     }
 
     bool explore(vector<State*>& v);
-    //void printGoal();
-
 };
 
 #endif

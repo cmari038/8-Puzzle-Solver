@@ -1,8 +1,8 @@
 #include "State.h"
 
 // g++ main.cpp State.cpp
- int State::getDistance(int val, int x, int y) {
-
+ int State::getDistance(int val, int x, int y) {    // calculates euclidean distance using specific value of misplaced tile and its true position. 
+                                                    // uses equation sqrt((y2 - y2)^2 + (x2-x1)^2)
         if(val == 1) {
             return sqrt(pow(x, 2) + pow(y, 2)); 
             // return abs(x) + abs(y);
@@ -49,7 +49,7 @@
         
     }
 
-    State::State() {
+    State::State() {        // default constructor for nodes which sets up goal state and default initial state. Used when "1" is chosen
          int count = 0;
          for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
@@ -77,7 +77,7 @@
 
     }
 
-    State::State(int start[3][3]) {
+    State::State(int start[3][3]) {         // constructor used for when user enters their own values
        
       // State();
       int count = 0;
@@ -94,7 +94,7 @@
 
     }
 
-    State::State(State* s) {
+    State::State(State* s) {            // constructor used for when creating new children nodes
        // State();
 
         int count = 0;
@@ -110,7 +110,7 @@
         Copy(this, s);
     }
 
-    void State::setInitial(int start[3][3]) {
+    void State::setInitial(int start[3][3]) {       // modifies initial state of node array to match user input
         for(unsigned int i = 0; i < 3; ++i) {
             for(unsigned int j = 0; j < 3; ++j) {
 
@@ -124,7 +124,7 @@
         }
     }
 
-    int State::MisplacedTile() {
+    int State::MisplacedTile() {                    // counts how many misplaced tiles there are in array by comparing each index to corresponding index in goal state
         int count = 0;
         for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
@@ -137,7 +137,7 @@
     }
 
 
-    int State::Euclidean() {
+    int State::Euclidean() {                        // uses get distance function to get total euclidean heuristic of all misplaced tiles
         int count = 0;
         for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
@@ -151,7 +151,7 @@
 
 
 
-    bool State::comparison() {
+    bool State::comparison() {                      // comapres current state of array to goal state to see if goal was reached
 
         for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
@@ -164,7 +164,7 @@
     }
 
 
-    void State::print() {
+    void State::print() {                           // prints out array 
         for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
                cout << initial[i][j] << " ";
@@ -173,7 +173,7 @@
         }
 }
 
-void State::left() {
+void State::left() {                                // left operator (Note: [X][Y] -> [row][column] -> [vertical][horizontal])
     int holder = initial[blankX][blankY-1];
     initial[blankX][blankY-1] = 0;
     initial[blankX][blankY] = holder;
@@ -181,7 +181,7 @@ void State::left() {
     ++cost;
 }
 
-void State::right() {
+void State::right() {                               // right operator
     int holder = initial[blankX][blankY+1];
     initial[blankX][blankY+1] = 0;
     initial[blankX][blankY] = holder;
@@ -189,7 +189,7 @@ void State::right() {
     ++cost;
 }
 
-void State::up() {
+void State::up() {                                  // up operator
     int holder = initial[blankX-1][blankY];
     initial[blankX-1][blankY] = 0;
     initial[blankX][blankY] = holder;
@@ -197,7 +197,7 @@ void State::up() {
     ++cost;
 }
 
-void State::down() {
+void State::down() {                               // down operator
     int holder = initial[blankX+1][blankY];
     initial[blankX+1][blankY] = 0;
     initial[blankX][blankY] = holder;
@@ -205,7 +205,7 @@ void State::down() {
     ++cost;
 }
 
-void State::SetCost() {
+void State::SetCost() {                             // adds up cost and heuristic based on which algorithm was chosen 
     
 
     if(SearchChoice == 1) {
@@ -222,7 +222,7 @@ void State::SetCost() {
 }
 
 
-bool Compare_State(State* s1, State* s2) {
+bool Compare_State(State* s1, State* s2) {                      // compares the arrasy of two states to see if they are the same or not
          
          for(unsigned i = 0; i < 3; ++i) {
             for(unsigned j = 0; j < 3; ++j) {
@@ -234,7 +234,7 @@ bool Compare_State(State* s1, State* s2) {
         return true;
 }
 
-void Copy(State* s1, State* s2) {
+void Copy(State* s1, State* s2) {                               // copies the array of one state over to another state along with indexes for the blank square, value signifying algorithm chosen, and cost of the state 
 
     s1->blankX = s2->blankX;
     s1->blankY = s2->blankY;
@@ -248,7 +248,7 @@ void Copy(State* s1, State* s2) {
     }
 }
 
-bool State::explore(vector<State*>& v) {
+bool State::explore(vector<State*>& v) {                        // checks to see if state has already been explored using Compare State function
     for(int i = 0; i < v.size(); ++i) {
         if(Compare_State(this, v.at(i))) {
             return true;
@@ -257,15 +257,6 @@ bool State::explore(vector<State*>& v) {
 
     return false;
 }
-
-/*void State::printGoal() {
-      for(unsigned i = 0; i < 3; ++i) {
-            for(unsigned j = 0; j < 3; ++j) {
-               cout << goal[i][j] << " ";
-            }
-            cout << endl;
-        }
-} */
 
 
 

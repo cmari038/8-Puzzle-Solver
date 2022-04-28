@@ -6,7 +6,7 @@ using namespace std;
 #include <queue>
 
 
-bool CostComparison(State* s1, State* s2) { // comparator used to edit sort. Learned from geeksforgeeks.org and cpluplus.com
+bool CostComparison(State* s1, State* s2) { // comparator used to edit sort based on cost. Learned from geeksforgeeks.org and cpluplus.com
         return s1->getTotalCost() < s2->getTotalCost();
 }
  
@@ -15,7 +15,7 @@ int main() {
 
     int input; 
     int board[3][3];
-    vector<State*> frontier;
+    vector<State*> frontier; 
     vector<State*> explored;
     int depth;
     int maxNodes = 0;
@@ -25,6 +25,7 @@ int main() {
     int fail = 0;
     
 
+    // General inputs to start program
     cout << "Welcome to 862232299 8 puzzle solver." << endl;
     cout << "Type 1 to use a default puzzle, or 2 to enter your own puzzle." << endl; 
 
@@ -77,56 +78,56 @@ int main() {
 
         state->setSearchChoice(input);
 
-        // search 
+        // search algorithm  
 
       State* holder = nullptr;
 
-     // cout << "Putting start state into frontier" << endl;
+     // Putting start state into frontier
 
        frontier.push_back(state);
+       state->print();
+       cout << "Expanding node" << endl;
 
        while(!Goal) {
-
+            
+            // checking to see if frontier is empty which means all nodes have been explored and goal does not exist
            if(frontier.size() == 0) {
                cout << "Failure" << endl;
                fail = 1;
                Goal = true;
            }
 
-         //  cout << "Putting state into explored" << endl;
+         // Putting node with the smallest cost into explored
            explored.push_back(state);
            
-         //  cout << "Remove state from frontier" << endl;
-           frontier.erase(frontier.begin()); //remove node from frontier
+         // Rmoving node with smallest cost from frontier. Smallest cost will always be the first node in frontier.
+           frontier.erase(frontier.begin()); 
            
-        //   cout << "check if it is goal:" << state->comparison() << endl;
-           if(state->comparison()) {  // check if it's goal
-                cout << "true" << endl;
+        //   check if state we removed from frontier is goal
+           if(state->comparison()) {  
                 Goal = true;
            }
 
-           else { // expand
+           else { // expansion of node with the lowest cost into children nodes that can be created from all possible moves
 
-          // cout << "Expansion" << endl;
-
+                // move blank left
                 if(state->getBlankY() != 0) {
 
-                //    cout << "left" << endl;
-                    holder = new State(state);
-                    holder -> left();
+                    holder = new State(state);  // copy initial state of node with smallest cost into a new memory location
+                    holder -> left();   // modify node's initial state based on move operator
                    
-                    if(!holder->explore(explored)) {
+                    if(!holder->explore(explored)) {    //if new node is not in the explored vector, push into frontier
                         frontier.push_back(holder); 
                     }
 
-                    else {
+                    else {  // if new node has already been explored, delete it
                         delete holder;
                     }
                 }
 
                 if(state->getBlankY() != 2) {
 
-               //     cout << "right" << endl;
+               //  Right operator
 
                     holder = new State(state);
                     holder -> right();
@@ -142,7 +143,7 @@ int main() {
 
                 if(state->getBlankX() != 0) {
 
-                 //   cout << "up" << endl;
+                 // Up operator
 
                     holder = new State(state);
                     holder -> up();
@@ -158,7 +159,7 @@ int main() {
 
                 if(state->getBlankX() != 2) {
 
-               //    cout << "down" << endl;
+               //    Down operator
                    holder = new State(state);
                    holder -> down();
                    
@@ -171,23 +172,23 @@ int main() {
                     }
                 } 
 
-                if(frontier.size() > maxNodes) {
+                if(frontier.size() > maxNodes) {    // constantly updates maxNodes with the largest number of nodes found in frontier
                     maxNodes = frontier.size();
                 }
                 
-                sort(frontier.begin(), frontier.end(), CostComparison); 
-                state = frontier.at(0);
-                cout << "The best state to expand with g(n) " << state->C() << " and h(n) " << state->getHeuristic() << endl;
+                sort(frontier.begin(), frontier.end(), CostComparison);     //sorts all nodes in frontier ffrom lowest cost to highest cost
+                state = frontier.at(0);         //sets state equal to node at beginning of frontier since it has lowest cost
+                cout << "The best state to expand with g(n) = " << state->C() << " and h(n) = " << state->getHeuristic() << endl;   // prints out cost and heuristic for smallest node
                 state -> print();
                 cout << "Expanding this node..." << endl;
-                ++expndNodes;
+                ++expndNodes;   //keeps track of how many nodes we have expanded 
             }
 
 
        } 
 
     
-        if(Goal == true && fail == 0) {
+        if(Goal == true && fail == 0) {         // once goal is found
                 state->print();
                 cout << "Goal!!!" << endl;
                 cout << endl;
