@@ -12,18 +12,16 @@ class State {
     private:
     int goal[3][3];
     int initial[3][3];
-
     int Heuristic;
     int cost = 0;
     int blankX;
     int blankY;
     int SearchChoice; 
-
+    State* prev = nullptr;
     
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
     void SetCost();
-    
 
     public:
 
@@ -37,6 +35,10 @@ class State {
 
     void setSearchChoice(int val) {
         SearchChoice = val;
+    }
+
+    void setParent(State* s) {
+          prev = s;  
     }
 
     //getter
@@ -53,6 +55,10 @@ class State {
         return blankY;
     }
 
+    State* getPrev() {
+        return prev;
+    }
+
     //comparisons
     friend bool Compare_State(State* s1, State* s2);
     friend void Copy(State* s1, State* s2);
@@ -64,11 +70,7 @@ class State {
     void up();
     void down(); 
 
-    //print
-
     void print();
-
-    // printing
     
     int C() { return cost;}
     

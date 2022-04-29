@@ -4,6 +4,7 @@ using namespace std;
 #include <vector>
 #include <algorithm>
 #include <queue>
+#include "Tree.h"
 
 
 bool CostComparison(State* s1, State* s2) { // comparator used to edit sort based on cost. Learned from geeksforgeeks.org and cpluplus.com
@@ -23,6 +24,7 @@ int main() {
     State* state = nullptr;
     bool Goal = false;
     int fail = 0;
+    Tree* tree;
     
 
     // General inputs to start program
@@ -34,7 +36,6 @@ int main() {
     if(input == 1) {
 
         state = new State();
-        
     }
 
     else if(input == 2) {
@@ -68,7 +69,9 @@ int main() {
         state = new State(board);
         cout << endl;
     }
-    
+
+
+        tree = new Tree(state);
 
         cin.clear();
 
@@ -85,8 +88,8 @@ int main() {
      // Putting start state into frontier
 
        frontier.push_back(state);
-       state->print();
        cout << "Expanding node" << endl;
+       state->print();
 
        while(!Goal) {
             
@@ -189,12 +192,17 @@ int main() {
 
     
         if(Goal == true && fail == 0) {         // once goal is found
+                tree->getParent(state);
                 state->print();
                 cout << "Goal!!!" << endl;
                 cout << endl;
                 cout << "To solve this problem, the search algorithm expanded a total of " << expndNodes << " nodes." << endl;
                 cout << "The maximum number of nodes in the queue at any one time: " << maxNodes << endl;
-                cout << "The depth of the goal node was " << endl;
+                cout << "The depth of the goal node was " << tree->getDepth() << endl;
+                cout << endl;
+                cout << "Pathway:" << endl;
+                tree->printPath();
+                
         } 
 
     
