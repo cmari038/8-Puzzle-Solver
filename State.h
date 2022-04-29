@@ -12,40 +12,45 @@ class State {
     private:
     int goal[3][3];
     int initial[3][3];
-
     int Heuristic;
     int cost = 0;
     int blankX;
     int blankY;
     int SearchChoice; 
-
+    State* prev = nullptr;
     
+    // helper functions for cost calculations
     int getDistance(int val, int x, int y);
     void setInitial(int start[3][3]);
     void SetCost();
-    
 
     public:
 
-    int Euclidean();
-    int MisplacedTile();
+    int Euclidean(); // calculates euclidean
+    int MisplacedTile();    // calculates misplaced tile
 
-    // setters and constructors
+    // constructors
     State();
-    State(int start[3][3]); // start
-    State(State* s); // expansion
+    State(int start[3][3]); 
+    State(State* s);
 
-    void setSearchChoice(int val) {
+
+    //setters
+    void setSearchChoice(int val) { //sets search choice equal to value based on algorithm chosen
         SearchChoice = val;
     }
 
+    void setParent(State* s) {  // sets prev pointer equal to parent node
+          prev = s;  
+    }
+
     //getter
-    int getTotalCost() {
+    int getTotalCost() {    // gets total heuristic and cost value
         SetCost();
         return Heuristic;
     }
 
-    int getBlankX() {
+    int getBlankX() {   // gets value for blank index
         return blankX;
     }
 
@@ -53,9 +58,13 @@ class State {
         return blankY;
     }
 
-    //comparisons
-    friend bool Compare_State(State* s1, State* s2);
-    friend void Copy(State* s1, State* s2);
+    State* getPrev() {  // gets parent
+        return prev;
+    }
+
+    //friend functions
+    friend bool Compare_State(State* s1, State* s2);    // compares nodes
+    friend void Copy(State* s1, State* s2);     // copies array of one state into another
     
     // operators
     bool comparison();
@@ -64,14 +73,12 @@ class State {
     void up();
     void down(); 
 
-    //print
-
+    // prints out array of state
     void print();
-
-    // printing
     
     int C() { return cost;}
     
+    // gets total heuristic depending on SearchChoice 
     int getHeuristic() {
         if(SearchChoice == 1) {
             return 0;
@@ -86,6 +93,7 @@ class State {
         }
     }
 
+    // checks to see if node has already been explored.
     bool explore(vector<State*>& v);
 };
 

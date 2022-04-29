@@ -240,6 +240,7 @@ void Copy(State* s1, State* s2) {                               // copies the ar
     s1->blankY = s2->blankY;
     s1->SearchChoice = s2->SearchChoice;
     s1->cost = s2->cost;
+    s1->setParent(s2);
 
     for(unsigned i = 0; i < 3; ++i) {
         for(unsigned j = 0; j < 3; ++j) {
