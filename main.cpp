@@ -19,7 +19,7 @@ int main() {
     vector<State*> frontier; 
     vector<State*> explored;
     int depth;
-    int maxNodes = 0;
+    int maxNodes = 1; 
     int expndNodes = 1;
     State* state = nullptr;
     bool Goal = false;
