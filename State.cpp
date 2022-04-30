@@ -2,10 +2,10 @@
 
 // g++ main.cpp State.cpp
  int State::getDistance(int val, int x, int y) {    // calculates euclidean distance using specific value of misplaced tile and its true position. 
-                                                    // uses equation sqrt((y2 - y2)^2 + (x2-x1)^2)
+                                                    // uses equation sqrt((y2 - y1)^2 + (x2-x1)^2)
         if(val == 1) {
             return sqrt(pow(x, 2) + pow(y, 2)); 
-            // return abs(x) + abs(y);
+            // return abs(x) + abs(y);                  <- manhattan euristic 
         }
 
         else if(val == 2) {

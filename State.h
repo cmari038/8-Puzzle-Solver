@@ -78,7 +78,7 @@ class State {
     
     int C() { return cost;}
     
-    // gets total heuristic depending on SearchChoice 
+    // gets total heuristic depending on SearchChoice. 
     int getHeuristic() {
         if(SearchChoice == 1) {
             return 0;
